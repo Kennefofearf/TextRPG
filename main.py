@@ -9,6 +9,9 @@ import random
 
 from Player import player
 
+
+player1 = player()
+
 screen_width = 100
 
 # ### Title Screen ###
@@ -107,7 +110,7 @@ zone_map = {
         west: '',
     },
     'c2': {
-        zone_name: 'Village Square South',
+        zone_name: 'Village Square (South)',
         description: '',
         look: '',
         north: '',
@@ -125,7 +128,7 @@ zone_map = {
         west: '',
     },
     'b2': {
-        zone_name: 'Village Square North',
+        zone_name: 'Village Square (North)',
         description: '',
         look: '',
         north: '',
@@ -153,5 +156,100 @@ zone_map = {
     },
 }
 
+### Interactivity ###
+
+def print_location():
+    print('\n' + '-- ' + player1.location.upper() + ' --')
+    print('\n' + zone_map[player1.location][description])
+
+def prompt():
+    print('\n /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/')
+    print('Command?\n')
+    action = input("(A) Speak " + "(W) Look\n" + "(S) Interact " + "(D) Move\n" + "Type -quit- to exit.")
+    valid_actions = ['a', 'w', 's', 'd', 'quit']
+    while action.lower() not in valid_actions:
+        print("Invalid command.\n")
+        print('Command?\n')
+        action = input("(A) Speak " + "(W) Look\n" + "(S) Interact " + "(D) Move\n" + "Type -quit- to exit.")
+    if action.lower() == "quit":
+        sys.exit()
+    elif action.lower() == "a":
+        player_speak(action.lower())
+    elif action.lower() == "w":
+        player_look(action.lower())
+    elif action.lower() == "s":
+        player_interact(action.lower())
+    elif action.lower() == "d":
+        player_move(action.lower())
+
+def player_move(myAction):
+    print("Which direction?")
+    dest = input(
+        "         " + "(W) North" + "        \n" + "(A) West " + "(D) East \n" + "         " + "(S) South")
+    valid_move_actions = ['a', 'w', 's', 'd', ' ']
+    if dest == 'a':
+        destination = zone_map[player1.location][west]
+        move_handler(destination)
+    elif dest == 'w':
+        destination = zone_map[player1.location][north]
+        move_handler(destination)
+    elif dest == 'd':
+        destination = zone_map[player1.location][east]
+        move_handler(destination)
+    elif dest == 's':
+        destination = zone_map[player1.location][south]
+        move_handler(destination)
+
+def move_handler(destination):
+    print("\nArrived at:\n")
+    player1.location = destination
+    print_location()
+
+def player_look():
+    print('\n' + zone_map[look])
+
+
 def start_game():
     return
+
+def game_loop():
+    while player1.win_game is False:
+        if player1.lose_game is False:
+            prompt()
+
+def setup_game():
+    os.system('clear')
+# Naming the Player
+    name_question = ("What is your name?\n")
+    player_name = input()
+    player1.name = player_name
+# Player attribute questions
+    attribute_question = ("Are you: _____?\n" + "(A) Strong\n" + "(W) Nimble\n" + "(D) Average")
+    player_attributes = input()
+    valid_attribute_inputs = ['a', 'b', 'd']
+    if player_attributes.lower() not in valid_attribute_inputs:
+        print("Invalid selection.")
+        attribute_question = ("Are you: _____?\n" + "(A) Strong\n" + "(W) Nimble\n" + "(D) Average")
+        player_attributes = input()
+    if player_attributes.lower() in valid_attribute_inputs:
+        if player_attributes.lower() == 'a':
+            player1.str = 12
+            player1.dex = 8
+            player1.cha = 10
+            player1.hp = 12
+        elif player_attributes.lower() == 'w':
+            player1.str = 8
+            player1.dex = 12
+            player1.cha = 10
+            player1.hp = 8
+        elif player_attributes.lower() == 'd':
+            player1.str = 10
+            player1.dex = 10
+            player1.cha = 10
+            player1.hp = 10
+
+
+
+
+
+title_screen()
