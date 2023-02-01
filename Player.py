@@ -8,4 +8,3 @@ class player:
         self.win_game = False
         self.lose_game = False
         self.location = 'Village Start'
-        self.position = 'd2'

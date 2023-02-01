@@ -19,7 +19,7 @@ screen_width = 100
 def title_screen_selections():
     option = input("> ")
     if option.lower() == ("play"):
-        start_game() # placeholder
+        setup_game()
     elif option.lower() == ("help"):
         help_menu()
     elif option.lower() == ("quit"):
@@ -28,14 +28,14 @@ def title_screen_selections():
         print("Please enter valid command.")
         option = input("> ")
         if option.lower() == ("play"):
-            start_game()  # placeholder
+            setup_game()
         elif option.lower() == ("help"):
             help_menu()
         elif option.lower() == ("quit"):
             sys.exit()
 
 def title_screen():
-    os.system('clear')
+    os.system('cls')
     print("#########################")
     print("# RRRRR    PPPPP  GGGGG #")
     print("# R   R    P   P  G     #")
@@ -91,18 +91,20 @@ def help_menu():
 #  D  |    |    |    |    |
 #     ----------------------
 
-zone_name = ''
-description = 'description'
-look = 'look'
+zone_name = '',
+description = 'description',
+look = 'look',
 north = 'north', 'up'
 south = 'south', 'down'
 east = 'east', 'right'
 west = 'west', 'left'
 
 zone_map = {
-    'd2': {
-        zone_name: 'Village Start',
-        description: '',
+    'Village Start': {
+        zone_name: 'd2',
+        description: 'You wake in a run down village. '
+                     '\nThe buildings are very weathered and poorly maintained.'
+                     '\nYou notice a man staring at you and he shakes his head once you notice him.\n',
         look: '',
         north: 'c2',
         south: '',
@@ -114,7 +116,7 @@ zone_map = {
         description: '',
         look: '',
         north: '',
-        south: 'd2',
+        south: 'Village Start',
         east: '',
         west: 'c1',
     },
@@ -159,33 +161,33 @@ zone_map = {
 ### Interactivity ###
 
 def print_location():
-    print('\n' + '-- ' + player1.location.upper() + ' --')
-    print('\n' + zone_map[player1.location][description])
+    print('\n' + '-- ' + player1.location.upper() + ' --\n')
+    print('\n' + zone_map[player1.location][description] + '\n')
 
 def prompt():
     print('\n /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/')
     print('Command?\n')
-    action = input("(A) Speak " + "(W) Look\n" + "(S) Interact " + "(D) Move\n" + "Type -quit- to exit.")
+    action = input("(A) Speak " + "(W) Look\n" + "(S) Interact " + "(D) Move\n" + "Type -quit- to exit.\n")
     valid_actions = ['a', 'w', 's', 'd', 'quit']
     while action.lower() not in valid_actions:
         print("Invalid command.\n")
         print('Command?\n')
-        action = input("(A) Speak " + "(W) Look\n" + "(S) Interact " + "(D) Move\n" + "Type -quit- to exit.")
+        action = input("(A) Speak " + "(W) Look\n" + "(S) Interact " + "(D) Move\n" + "Type -quit- to exit.\n")
     if action.lower() == "quit":
         sys.exit()
-    elif action.lower() == "a":
-        player_speak(action.lower())
-    elif action.lower() == "w":
-        player_look(action.lower())
-    elif action.lower() == "s":
-        player_interact(action.lower())
+   #elif action.lower() == "a":
+        #player_speak(action.lower())
+    #elif action.lower() == "w":
+        #player_look(action.lower())
+    #elif action.lower() == "s":
+        #player_interact(action.lower())
     elif action.lower() == "d":
         player_move(action.lower())
 
 def player_move(myAction):
     print("Which direction?")
     dest = input(
-        "         " + "(W) North" + "        \n" + "(A) West " + "(D) East \n" + "         " + "(S) South")
+        "         " + "(W) North" + "        \n" + "(A) West " + "(D) East \n" + "         " + "(S) South\n")
     valid_move_actions = ['a', 'w', 's', 'd', ' ']
     if dest == 'a':
         destination = zone_map[player1.location][west]
@@ -208,28 +210,26 @@ def move_handler(destination):
 def player_look():
     print('\n' + zone_map[look])
 
-
-def start_game():
-    return
-
 def game_loop():
     while player1.win_game is False:
         if player1.lose_game is False:
             prompt()
 
 def setup_game():
-    os.system('clear')
+    os.system('cls')
 # Naming the Player
     name_question = ("What is your name?\n")
+    print(name_question)
     player_name = input()
     player1.name = player_name
 # Player attribute questions
     attribute_question = ("Are you: _____?\n" + "(A) Strong\n" + "(W) Nimble\n" + "(D) Average")
+    print(attribute_question)
     player_attributes = input()
-    valid_attribute_inputs = ['a', 'b', 'd']
+    valid_attribute_inputs = ['a', 'w', 'd']
     if player_attributes.lower() not in valid_attribute_inputs:
         print("Invalid selection.")
-        attribute_question = ("Are you: _____?\n" + "(A) Strong\n" + "(W) Nimble\n" + "(D) Average")
+        attribute_question = ("Are you: _____?\n" + "(A) Strong\n" + "(W) Nimble\n" + "(D) Average\n")
         player_attributes = input()
     if player_attributes.lower() in valid_attribute_inputs:
         if player_attributes.lower() == 'a':
@@ -248,8 +248,8 @@ def setup_game():
             player1.cha = 10
             player1.hp = 10
 
-
-
-
+    print("Welcome, " + player_name + "!\n")
+    print("Seek the fortress. It is your only chance...")
+    game_loop()
 
 title_screen()
