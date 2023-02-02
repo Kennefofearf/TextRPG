@@ -51,7 +51,6 @@ def title_screen():
 def help_menu():
     title_screen_selections()
 
-
     # Village MAP
 
 #       1    2    3    4
@@ -94,18 +93,28 @@ def help_menu():
 zone_name = '',
 description = 'description',
 look = 'look',
+speak = 'speak',
+interact = player_interact()
+interactText = '',
 north = 'north', 'up'
 south = 'south', 'down'
 east = 'east', 'right'
 west = 'west', 'left'
 
 zone_map = {
-    'Village Start': {
+    'Village Rear': {
         zone_name: 'd2',
-        description: 'You wake in a run down village. '
-                     '\nThe buildings are very weathered and poorly maintained.'
+        description: '\nYou are at the rear of the village.'
+                     '\nThe buildings are very weathered and some have holes in the roofs.'
                      '\nYou notice a man staring at you and he shakes his head once you notice him.\n',
-        look: '',
+        look: '\nA man is staring at you.'
+              "\nHe looks like he's waiting for you to speak.",
+        speak:
+            '\nAnother one? At least you dropped in a safe place.'
+            "\nHad too many 'visitors' enter straight through some poor sap's ceiling."
+            "\nHurry up and leave. We can barely shelter ourselves anymore...",
+        interact: interact_text(),
+        interactText: '\nThe man pulls his hand away as you try to shake it.',
         north: 'c2',
         south: '',
         east: '',
@@ -115,8 +124,11 @@ zone_map = {
         zone_name: 'Village Square (South)',
         description: '',
         look: '',
+        speak: '',
+        interact: '',
+        interactText: '',
         north: '',
-        south: 'Village Start',
+        south: 'Village Rear',
         east: '',
         west: 'c1',
     },
@@ -124,6 +136,9 @@ zone_map = {
         zone_name: 'Village Home 1',
         description: '',
         look: '',
+        speak: '',
+        interact: '',
+        interactText: '',
         north: '',
         south: '',
         east: 'c2',
@@ -133,6 +148,9 @@ zone_map = {
         zone_name: 'Village Square (North)',
         description: '',
         look: '',
+        speak: '',
+        interact: '',
+        interactText: '',
         north: '',
         south: 'c2',
         east: 'b3',
@@ -142,6 +160,9 @@ zone_map = {
         zone_name: 'Village Home 2',
         description: '',
         look: '',
+        speak: '',
+        interact: '',
+        interactText: '',
         north: '',
         south: '',
         east: '',
@@ -151,6 +172,9 @@ zone_map = {
         zone_name: 'Village Entrance',
         description: '',
         look: '',
+        speak: '',
+        interact: '',
+        interactText: '',
         north: '',
         south: 'b2',
         east: '',
@@ -160,12 +184,18 @@ zone_map = {
 
 ### Interactivity ###
 
+def player_interact():
+    zone_map[player1.location][interact]
+
+def interact_text():
+    print(zone_map[player1.location][interactText])
+
 def print_location():
     print('\n' + '-- ' + player1.location.upper() + ' --\n')
     print('\n' + zone_map[player1.location][description] + '\n')
 
 def prompt():
-    print('\n /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/')
+    print_location()
     print('Command?\n')
     action = input("(A) Speak " + "(W) Look\n" + "(S) Interact " + "(D) Move\n" + "Type -quit- to exit.\n")
     valid_actions = ['a', 'w', 's', 'd', 'quit']
@@ -175,19 +205,27 @@ def prompt():
         action = input("(A) Speak " + "(W) Look\n" + "(S) Interact " + "(D) Move\n" + "Type -quit- to exit.\n")
     if action.lower() == "quit":
         sys.exit()
-   #elif action.lower() == "a":
-        #player_speak(action.lower())
-    #elif action.lower() == "w":
-        #player_look(action.lower())
-    #elif action.lower() == "s":
-        #player_interact(action.lower())
+    elif action.lower() == "a":
+        player_speak()
+    elif action.lower() == "w":
+        player_look()
+    elif action.lower() == "s":
+        player_interact()
     elif action.lower() == "d":
         player_move(action.lower())
+
+def player_look():
+    print(zone_map[player1.location][look] + '\n')
+    time.sleep(3)
+
+def player_speak():
+    print(zone_map[player1.location][speak] + '\n')
+    time.sleep(3)
 
 def player_move(myAction):
     print("Which direction?")
     dest = input(
-        "         " + "(W) North" + "        \n" + "(A) West " + "(D) East \n" + "         " + "(S) South\n")
+        "         " + "(W) North" + "        \n" + "(A) West " + "          " + "(D) East \n" + "         " + "(S) South\n")
     valid_move_actions = ['a', 'w', 's', 'd', ' ']
     if dest == 'a':
         destination = zone_map[player1.location][west]
@@ -205,10 +243,6 @@ def player_move(myAction):
 def move_handler(destination):
     print("\nArrived at:\n")
     player1.location = destination
-    print_location()
-
-def player_look():
-    print('\n' + zone_map[look])
 
 def game_loop():
     while player1.win_game is False:

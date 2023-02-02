@@ -7,4 +7,4 @@ class player:
         self.cha = 10
         self.win_game = False
         self.lose_game = False
-        self.location = 'Village Start'
+        self.location = 'Village Rear'
