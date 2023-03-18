@@ -94,7 +94,7 @@ zone_name = '',
 description = 'description',
 look = 'look',
 speak = 'speak',
-interact = player_interact()
+interact = int
 interactText = '',
 north = 'north', 'up'
 south = 'south', 'down'
@@ -113,7 +113,7 @@ zone_map = {
             '\nAnother one? At least you dropped in a safe place.'
             "\nHad too many 'visitors' enter straight through some poor sap's ceiling."
             "\nHurry up and leave. We can barely shelter ourselves anymore...",
-        interact: interact_text(),
+        interact: 1,
         interactText: '\nThe man pulls his hand away as you try to shake it.',
         north: 'c2',
         south: '',
@@ -182,11 +182,6 @@ zone_map = {
     },
 }
 
-### Interactivity ###
-
-def player_interact():
-    zone_map[player1.location][interact]
-
 def interact_text():
     print(zone_map[player1.location][interactText])
 
@@ -221,6 +216,10 @@ def player_look():
 def player_speak():
     print(zone_map[player1.location][speak] + '\n')
     time.sleep(3)
+
+def player_interact():
+    if interact == 1:
+        interact_text()
 
 def player_move(myAction):
     print("Which direction?")
