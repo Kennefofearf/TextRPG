@@ -9,10 +9,10 @@ import random
 
 from Player import player
 
-
 player1 = player()
 
 screen_width = 100
+
 
 # ### Title Screen ###
 
@@ -34,6 +34,7 @@ def title_screen_selections():
         elif option.lower() == ("quit"):
             sys.exit()
 
+
 def title_screen():
     os.system('cls')
     print("#########################")
@@ -48,10 +49,12 @@ def title_screen():
     print("        - Quit -         ")
     title_screen_selections()
 
+
 def help_menu():
     title_screen_selections()
 
     # Village MAP
+
 
 #       1    2    3    4
 #     ______________________
@@ -182,12 +185,21 @@ zone_map = {
     },
 }
 
+
+def player_interact():
+    if zone_map[player1.location][interact] == 1:
+        interact_text()
+
+
 def interact_text():
-    print(zone_map[player1.location][interactText])
+    print(zone_map[player1.location][interactText] + '\n')
+    time.sleep(3)
+
 
 def print_location():
     print('\n' + '-- ' + player1.location.upper() + ' --\n')
     print('\n' + zone_map[player1.location][description] + '\n')
+
 
 def prompt():
     print_location()
@@ -209,17 +221,16 @@ def prompt():
     elif action.lower() == "d":
         player_move(action.lower())
 
+
 def player_look():
     print(zone_map[player1.location][look] + '\n')
     time.sleep(3)
+
 
 def player_speak():
     print(zone_map[player1.location][speak] + '\n')
     time.sleep(3)
 
-def player_interact():
-    if interact == 1:
-        interact_text()
 
 def player_move(myAction):
     print("Which direction?")
@@ -239,23 +250,26 @@ def player_move(myAction):
         destination = zone_map[player1.location][south]
         move_handler(destination)
 
+
 def move_handler(destination):
     print("\nArrived at:\n")
     player1.location = destination
+
 
 def game_loop():
     while player1.win_game is False:
         if player1.lose_game is False:
             prompt()
 
+
 def setup_game():
     os.system('cls')
-# Naming the Player
+    # Naming the Player
     name_question = ("What is your name?\n")
     print(name_question)
     player_name = input()
     player1.name = player_name
-# Player attribute questions
+    # Player attribute questions
     attribute_question = ("Are you: _____?\n" + "(A) Strong\n" + "(W) Nimble\n" + "(D) Average")
     print(attribute_question)
     player_attributes = input()
@@ -284,5 +298,6 @@ def setup_game():
     print("Welcome, " + player_name + "!\n")
     print("Seek the fortress. It is your only chance...")
     game_loop()
+
 
 title_screen()
