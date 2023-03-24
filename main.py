@@ -123,15 +123,15 @@ zone_map = {
         east: '',
         west: '',
     },
-    'c2': {
-        zone_name: 'Village Square (South)',
+    'Village Square (South)': {
+        zone_name: 'c2',
         description: '',
         look: '',
         speak: '',
         interact: '',
         interactText: '',
         north: '',
-        south: 'Village Rear',
+        south: 'd2',
         east: '',
         west: 'c1',
     },
