@@ -135,8 +135,8 @@ zone_map = {
         east: '',
         west: 'c1',
     },
-    'c1': {
-        zone_name: 'Village Home 1',
+    'Village Home 1': {
+        zone_name: 'c1',
         description: '',
         look: '',
         speak: '',
