@@ -115,7 +115,7 @@ zone_map = {
         speak:
             '\nAnother one? At least you dropped in a safe place.'
             "\nHad too many 'visitors' enter straight through some poor sap's ceiling."
-            "\nHurry up and leave. We can barely shelter ourselves anymore...",
+            "\nHurry up and leave. We have no shelter for you here...",
         interact: 1,
         interactText: '\nThe man pulls his hand away as you try to shake it.',
         north: 'c2',
@@ -125,7 +125,10 @@ zone_map = {
     },
     'Village Square (South)': {
         zone_name: 'c2',
-        description: '',
+        description: '\nYou enter what appears to be the center of the village.'
+                     '\nYou see many people trying to repair the holes in their roofs.'
+                     '\nYou see little foot traffic minus a couple children playing and a shivering woman in a blanket.'
+                     '\nThe woman is looking at you.\n',
         look: '',
         speak: '',
         interact: '',
